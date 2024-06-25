@@ -1,0 +1,200 @@
+
+// JAVA-SUPER CLASS NON parameterized Constructor available in subclass even if subclass is having non-para or  para cons 
+
+
+// POINT 1--------
+
+User
+are constructor of super class available in sub class
+
+ChatGPT
+Yes, constructors of a superclass are available in a subclass. When you create an instance of a subclass, the constructor of the superclass is implicitly called before the subclass constructor. This is done to ensure that the initialization code in the superclass is executed before the subclass initialization code.
+
+If the superclass constructor requires arguments, you must explicitly call the superclass constructor using the super() keyword within the subclass constructor. This is typically done as the first statement in the subclass constructor.
+
+Here's an example to illustrate:
+
+// java
+
+class Superclass {
+    public Superclass(int value) {
+        System.out.println("Superclass constructor with value: " + value);
+    }
+}
+
+class Subclass extends Superclass {
+    public Subclass(int value) {
+        super(value); // Calling superclass constructor explicitly
+        System.out.println("Subclass constructor with value: " + value);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Subclass obj = new Subclass(10);
+    }
+}
+Output:
+
+Superclass constructor with value: 10
+Subclass constructor with value: 10
+
+In this example, when an instance of Subclass is created, the constructor of Superclass is automatically invoked before the constructor of Subclass, and the super(value) call passes the argument to the superclass constructor.
+
+// POINT 2----------
+
+If the superclass has a non-parameterized (default) constructor, and the subclass does not explicitly call a constructor of the superclass using super(), then the default constructor of the superclass is implicitly called before the subclass constructor. This behavior is the same as if you had explicitly written super() as the first statement in the subclass constructor.
+
+
+class Superclass {
+    public Superclass() {
+        System.out.println("Superclass default constructor");
+    }
+}
+
+class Subclass extends Superclass {
+    public Subclass() {
+        // super() is implicitly called here
+        System.out.println("Subclass default constructor");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Subclass obj = new Subclass();
+    }
+}
+
+Output:
+Superclass default constructor
+Subclass default constructor
+In this example, when an instance of Subclass is created, the default constructor of Superclass is implicitly called before the constructor of Subclass. This ensures that the initialization code in the superclass is executed before the subclass initialization code.
+
+// POINT3---------
+
+class SuperClass {
+    int x;
+    
+    // Non-parameterized constructor
+    SuperClass() {
+        System.out.println("super class");
+    }
+}
+
+class SubClass extends SuperClass {
+    int y;
+    
+    // Parameterized constructor in subclass
+    SubClass(int x, int y) {
+        // Implicit call to superclass default constructor
+        System.out.println("sub class");
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        SubClass obj = new SubClass(2,3);
+    }
+}
+
+output:
+
+
+// POINT3------------
+
+User
+does this happen same in python
+
+ChatGPT
+In Python, the behavior is slightly different from Java.
+
+No Implicit Superclass Constructor Call:
+
+Unlike Java, where the superclass constructor is implicitly called if the subclass constructor doesn't explicitly call it using super(), in Python, there's no implicit call to the superclass constructor.
+If a subclass defines its own constructor and does not explicitly call the superclass constructor, the superclass constructor is not automatically invoked.
+Explicit Superclass Constructor Call:
+
+If you want to call the constructor of the superclass from the subclass constructor in Python, you must explicitly do so using the super() function.\
+
+Example:
+python
+class Superclass:
+    def __init__(self):
+        print("Superclass constructor")
+
+class Subclass(Superclass):
+    def __init__(self):
+        super().__init__()  # Explicitly calling superclass constructor
+        print("Subclass constructor")
+
+obj = Subclass()  
+
+# Output will be:
+    # Superclass constructor
+    # Subclass constructor
+
+Inheritance without Constructor:
+
+If a subclass does not define its own constructor, it inherits the constructor of the superclass.
+Example:
+python
+Copy code
+class Superclass:
+    def __init__(self):
+        print("Superclass constructor")
+
+class Subclass(Superclass):
+    pass
+
+obj = Subclass() 
+ # Output will be:
+        # Superclass constructor
+
+
+In summary, in Python, there is no implicit call to the superclass constructor from the subclass constructor. If you want to call the superclass constructor from the subclass, you need to do so explicitly using super(). If the subclass does not define its own constructor, it inherits the constructor of the superclass automatically.
+
+// POINT ---------
+
+User
+what in case of paremeter constructor in python?
+ChatGPT
+In Python, if the superclass has a parameterized constructor and the subclass defines its own constructor without explicitly calling the superclass constructor using super(), the superclass constructor is not automatically invoked. Similarly, if the subclass constructor has parameters but does not explicitly call the superclass constructor, there will be no implicit invocation of the superclass constructor.
+
+Here's an example to illustrate:
+
+python
+Copy code
+class Superclass:
+    def __init__(self, value):
+        self.value = value
+        print("Superclass constructor with value:", value)
+
+class Subclass(Superclass):
+    def __init__(self, value):
+        self.value = value
+        print("Subclass constructor with value:", value)
+
+obj = Subclass(10)  # Output will be:
+                    # Subclass constructor with value: 10
+In this example, when an instance of Subclass is created with the parameter 10, only the constructor of Subclass is called. The superclass constructor is not invoked implicitly because Subclass does not call it explicitly using super().__init__(value). Therefore, only the print statement from the subclass constructor is executed.
+
+To invoke the superclass constructor explicitly from the subclass constructor, you need to use super().__init__(value) within the subclass constructor. Here's the modified example:
+
+python
+Copy code
+class Superclass:
+    def __init__(self, value):
+        self.value = value
+        print("Superclass constructor with value:", value)
+
+class Subclass(Superclass):
+    def __init__(self, value):
+        super().__init__(value)  # Calling superclass constructor explicitly
+        print("Subclass constructor with value:", value)
+
+obj = Subclass(10)  
+# Output will be:
+        # Superclass constructor with value: 10
+        # Subclass constructor with value: 10
+Now, both the superclass constructor and the subclass constructor are called explicitly, and you'll see the output from both constructors.
