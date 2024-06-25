@@ -16,9 +16,12 @@ public class Client {
 
         genericPair<Integer, String> PIS = new genericPair<Integer, String>(20, "satwik");
         System.out.println(PIS.getFirst());
+
         genericPair<String, String> PSS= new genericPair<String, String>("om", "sairamn");
         System.out.println(PSS.getFirst());
+
         genericPair<Integer, genericPair<Integer, String>> nestedPair = new genericPair<>(7, PIS);
+        
         genericPair<Integer, String> second = nestedPair.getSecond();
         System.out.println(second);
 
